@@ -1,23 +1,23 @@
 {
   "vehicleRegistry": [
     {
-      "_id": "1",
+      "id": "1",
       "name": "John Doe",
       "vehicles": [
-    {
-        "name": "Car1",
-        "year": 2020,
-        "color": "Red"
+        {
+          "name": "Car1",
+          "year": 2020,
+          "color": "Red"
+        },
+        {
+          "name": "Bike1",
+          "year": 2018,
+          "color": "Blue"
+        }
+      ]
     },
     {
-        "name": "Bike1",
-        "year": 2018,
-        "color": "Blue"
-    }
-]
-    },
-    {
-      "_id": "2",
+      "id": "2",
       "name": "Jane Smith",
       "vehicles": [
         {
@@ -27,6 +27,5 @@
         }
       ]
     }
-   
   ]
 }
