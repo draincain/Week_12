@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle App</title>
+    <!-- Linking Bootstrap CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 <body class="container">
+    <!-- Div that contains the form for adding a new vehicle owner -->
     <div id="new-owner" class="jumbotron jumbotron-fluid">
         <h2>New Vehicle Owner</h2>
         <form>
@@ -17,11 +19,13 @@
             <button id="create-new-owner" class="btn btn-primary form-control">Register</button>
         </form> <br>
     </div>
-
+    <!-- the div that conatins the app for displaying vehicle owners and their vehicles.
+          controlled with the DOMManager for adding HMTL elements -->
     <div id="app">
 
 
     </div>
+        <!-- Linking jQuery and Bootstrap JS -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script> 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="vehicleapp.js"></script>

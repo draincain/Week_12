@@ -9,17 +9,18 @@ let html = (strings, ...values) =>
   strings.reduce((acc, str, i) => acc + str + (values[i] || ""), "");
 //lit-html snippet - End
 
+// class for the owner
 class Owner {
   constructor(name) {
     this.name = name;
     this.vehicles = [];
   }
-
+// method for adding a new vehicle to the vehicles array defined above
   addVehicle(name, year, color) {
     this.vehicles.push(new Vehicle(name, year, color));
   }
 }
-
+// class for vehicles
 class Vehicle {
   constructor(name, year, color) {
     this.name = name;
@@ -28,11 +29,14 @@ class Vehicle {
   }
 }
 
+// class for VehicleService which performs the CRUD operations
 class VehicleService {
-  //   static URL_ENDPOINT = "http://localhost:3000/vehicleRegistry";
-  static URL_ENDPOINT =
-    "https://65a6ae9974cf4207b4f0a100.mockapi.io/VehicleRegistry";
+  // my endpoint pointing to the db.josn file I have, I tried with a mock API as well 
+  static URL_ENDPOINT = "http://localhost:3000/vehicleRegistry";
+  // static URL_ENDPOINT =
+  //  "https://65a6ae9974cf4207b4f0a100.mockapi.io/VehicleRegistry";
 
+  // method for fetching and interacting with the API
   static getAllOwners() {
     return $.get(this.URL_ENDPOINT);
   }
@@ -40,7 +44,7 @@ class VehicleService {
   static getOwner(id) {
     return $.get(this.URL_ENDPOINT + `/${id}`);
   }
-
+//  method for creating a new owner, performs an AJAX call to post to the endpoint
   static createOwner(owner) {
     return $.ajax({
       url: this.URL_ENDPOINT,
@@ -50,7 +54,7 @@ class VehicleService {
       type: "POST",
     });
   }
-
+// method for to update owner information
   static updateOwner(owner) {
     return $.ajax({
       url: this.URL_ENDPOINT + `/${owner.id}`,
@@ -60,7 +64,7 @@ class VehicleService {
       type: "PUT",
     });
   }
-
+// method for deleting an owner
   static deleteOwner(id) {
     return $.ajax({
       url: this.URL_ENDPOINT + `/${id}`,
@@ -68,14 +72,14 @@ class VehicleService {
     });
   }
 }
-
+// Class for managing the DOM (rendering owners and vehicles)
 class DOMManager {
   static owners;
-
+ // Fetch all owners and render them
   static getAllOwners() {
     VehicleService.getAllOwners().then((owners) => this.render(owners));
   }
-
+// Create a new owner and render all owners
   static createOwner(name) {
     VehicleService.createOwner(new Owner(name))
       .then(() => {
@@ -83,7 +87,7 @@ class DOMManager {
       })
       .then((owners) => this.render(owners));
   }
-
+  // Delete an owner and render all owners
   static deleteOwner(id) {
     VehicleService.deleteOwner(id)
       .then(() => {
@@ -91,7 +95,44 @@ class DOMManager {
       })
       .then((owners) => this.render(owners));
   }
-
+// Add a vehicle to an owner and render all owners, pushes to vehicle array
+  static addVehicle(id) {
+    for (let owner of this.owners) {
+      if (owner.id === id) {
+        owner.vehicles.push(
+          new Vehicle(
+            $(`#${owner.id}-vehicle-name`).val(),
+            $(`#${owner.id}-vehicle-year`).val(),
+            $(`#${owner.id}-vehicle-color`).val()
+          )
+        );
+        VehicleService.updateOwner(owner)
+          .then(() => {
+            return VehicleService.getAllOwners();
+          })
+          .then((owners) => this.render(owners));
+      }
+    }
+  }
+// Delete a vehicle from an owner and render all owner
+  static deleteVehicle(ownerId, vehicleName) {
+    console.log("Deleting vehicle:", ownerId, vehicleName);
+    for (let owner of this.owners) {
+      if (owner.id == ownerId) {
+        for (let vehicle of owner.vehicles) {
+          if (vehicle.name == vehicleName) {
+            owner.vehicles.splice(owner.vehicles.indexOf(vehicle), 1);
+            VehicleService.updateOwner(owner)
+              .then(() => {
+                return VehicleService.getAllOwners();
+              })
+              .then((owners) => this.render(owners));
+          }
+        }
+      }
+    }
+  }
+// Render owners and their vehicles
   static render(owners) {
     this.owners = owners;
     $("#app").empty();
@@ -147,6 +188,7 @@ class DOMManager {
           </div>
           <br />`
       );
+    // Display vehicles for the owner
       for (let vehicle of owner.vehicles) {
         $(`#${owner.id}`)
           .find(".card-body")
@@ -163,7 +205,7 @@ class DOMManager {
               >
               <button
                 class="btn btn-danger"
-                onclick="DOMManager.deleteVehicle('${owner.id}', '${vehicle.id}')"
+                onclick="DOMManager.deleteVehicle('${owner.id}', '${vehicle.name}')"
               >
                 Delete Vehicle
               </button>
@@ -174,10 +216,12 @@ class DOMManager {
   }
 }
 
+// Event listener for creating a new owner
 $("#create-new-owner").click((e) => {
   e.preventDefault();
   DOMManager.createOwner($("#fullName").val());
   $("#fullName").val("");
 });
 
+// Initial fetch and render of owners
 DOMManager.getAllOwners();
