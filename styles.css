@@ -1,0 +1,32 @@
+/* styles.css */
+
+/* Style for the header and buttons */
+.jumbotron, .btn {
+    margin-top: 20px;
+}
+
+/* Style for owner cards */
+.card {
+    margin-top: 20px;
+    border: 0px solid #16020200;
+    border-radius: 10px;
+}
+
+
+
+/* Style for vehicle details and delete button */
+.card-body p {
+    margin-bottom: 0;
+}
+
+
+
+/* Responsive styling for small screens */
+@media (max-width: 576px) {
+    .jumbotron {
+        padding: 10px;
+    }
+    .card-body {
+        padding: 10px;
+    }
+}
