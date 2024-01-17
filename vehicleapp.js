@@ -139,7 +139,7 @@ class DOMManager {
     for (let owner of owners) {
       $("#app").prepend(
         html` <div id="${owner.id}" class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark text-white">
               <h2>${owner.name}</h2>
               <button
                 class="btn btn-danger"
@@ -148,10 +148,10 @@ class DOMManager {
                 Delete
               </button>
             </div>
-            <div class="card-body">
-              <div class="card">
-                <div class="row">
-                  <div class="col-sm">
+            <div class="card-body bg-dark text-white">
+              <div class="card bg-dark text-white">
+                <div class="row bg-dark text-white">
+                  <div class="col-sm ">
                     <input
                       type="text"
                       id="${owner.id}-vehicle-name"
@@ -176,6 +176,7 @@ class DOMManager {
                     />
                   </div>
                 </div>
+                <br>
                 <button
                   id="${owner.id}-new-vehicle"
                   onclick="DOMManager.addVehicle('${owner.id}')"
@@ -193,16 +194,16 @@ class DOMManager {
         $(`#${owner.id}`)
           .find(".card-body")
           .append(
-            html`<p>
+            html`<br><p>
               <span id="name-${vehicle.id}"
                 ><strong>Name: </strong> ${vehicle.name}</span
-              >
+              ><br>
               <span id="year-${vehicle.id}"
                 ><strong>Year: </strong> ${vehicle.year}</span
-              >
+              ><br>
               <span id="color-${vehicle.id}"
                 ><strong>Color: </strong> ${vehicle.color}</span
-              >
+              ><br><br>
               <button
                 class="btn btn-danger"
                 onclick="DOMManager.deleteVehicle('${owner.id}', '${vehicle.name}')"

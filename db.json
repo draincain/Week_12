@@ -1,9 +1,31 @@
 {
   "vehicleRegistry": [
     {
-      "id": "fbe9",
-      "name": "Adrian Caiin",
-      "vehicles": []
+      "id": "fa56",
+      "name": "Adrian Cain",
+      "vehicles": [
+        {
+          "name": "Vibe",
+          "year": "2007",
+          "color": "Red"
+        },
+        {
+          "name": "Blazer",
+          "year": "1987",
+          "color": "Blue"
+        }
+      ]
+    },
+    {
+      "id": "bc90",
+      "name": "Brant Wetuski",
+      "vehicles": [
+        {
+          "name": "Expedition",
+          "year": "2016",
+          "color": "Green"
+        }
+      ]
     }
   ]
 }
